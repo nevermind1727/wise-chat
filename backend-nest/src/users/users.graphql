@@ -1,0 +1,27 @@
+type User {
+  id: String
+  name: String
+  email: String
+  image: String
+  username: String
+  emailVerified: Boolean
+}
+
+type FoundUser {
+  id: String!
+  username: String
+  image: String
+}
+
+type Query {
+  findUsers(username: String): [FoundUser]
+}
+
+type Mutation {
+  createUsername(username: String): CreateUsernameResponse
+}
+
+type CreateUsernameResponse {
+  success: Boolean
+  error: String
+}

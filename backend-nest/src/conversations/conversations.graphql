@@ -1,0 +1,55 @@
+scalar DateTime
+
+type Mutation {
+  createConversation(participantsIds: [String]): CreateConversationResponse
+}
+
+type Conversation {
+  id: String
+  lastSentMessage: Message
+  participants: [Participant]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Participant {
+  id: String
+  user: User
+  hasSeenLastMessage: Boolean
+}
+
+type ConversationUpdatedSubscriptionPayload {
+  conversation: Conversation
+}
+
+type ConversationDeletedSubscriptionPayload {
+  id: String
+}
+
+type Query {
+  getConversations: [Conversation]
+}
+
+type CreateConversationResponse {
+  conversationId: String
+}
+
+type Subscription {
+  conversationCreated: Conversation
+}
+
+type Subscription {
+  conversationUpdated: ConversationUpdatedSubscriptionPayload
+}
+
+type Mutation {
+  markAsRead(conversationId: String): Boolean
+}
+
+type Mutation {
+  deleteConversation(conversationId: String): Boolean
+}
+
+type Subscription {
+  conversationDeleted: ConversationDeletedSubscriptionPayload
+}

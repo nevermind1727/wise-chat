@@ -50,8 +50,8 @@ export interface CreateConversationResponse {
 
 export interface ISubscription {
     conversationCreated(): Nullable<Conversation> | Promise<Nullable<Conversation>>;
-    conversationUpdated(): Nullable<ConversationUpdatedSubscriptionPayload> | Promise<Nullable<ConversationUpdatedSubscriptionPayload>>;
     conversationDeleted(): Nullable<ConversationDeletedSubscriptionPayload> | Promise<Nullable<ConversationDeletedSubscriptionPayload>>;
+    conversationUpdated(): Nullable<ConversationUpdatedSubscriptionPayload> | Promise<Nullable<ConversationUpdatedSubscriptionPayload>>;
     messageSent(conversationId?: Nullable<string>): Nullable<Message> | Promise<Nullable<Message>>;
 }
 

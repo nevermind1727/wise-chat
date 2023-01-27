@@ -1,6 +1,6 @@
 import { Session } from "next-auth";
 import ConversationsList from "./ConversationsList";
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import ConversationOperations from "../../../graphql/operations/conversation-operations";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import {
@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import SkeletonLoader from "../../common/SkeletonLoader";
 import { ParticipantPopulated } from "../../../../../backend-nest/src/utils/types";
 import MessageOperations from "../../../graphql/operations/message-operations";
+import { signOut } from "next-auth/react";
 
 interface ConversationsWrapperProps {
   session: Session;

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { getMessagesFields } from "./message-operations";
 
-const getConversationsFields = `
+export const getConversationsFields = `
         id
         participants {
             user {
@@ -54,15 +54,6 @@ export default {
                 }
             }
            `,
-    conversationUpdated: gql`
-      subscription ConversationUpdated {
-        conversationUpdated {
-          conversation {
-            ${getConversationsFields}
-          }
-        }
-      }
-    `,
     conversationDeleted: gql`
       subscription ConversationDeleted {
         conversationDeleted {

@@ -11,6 +11,22 @@ export const getMessagesFields = `
     createdAt
 `;
 
+const getConversationsFields = `
+        id
+        participants {
+            user {
+                username
+                id
+                image
+            }
+            hasSeenLatestMessage
+        }
+        lastSentMessage {
+            ${getMessagesFields}
+        }
+        updatedAt
+`;
+
 export default {
   Queries: {
     getMessages: gql`
@@ -41,6 +57,15 @@ export default {
       subscription MessageSent($conversationId: String) {
         messageSent(conversationId: $conversationId) {
           ${getMessagesFields}
+        }
+      }
+    `,
+    conversationUpdated: gql`
+      subscription ConversationUpdated {
+        conversationUpdated {
+          conversation {
+            ${getConversationsFields}
+          }
         }
       }
     `,

@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import SkeletonLoader from "../../common/SkeletonLoader";
 import { ParticipantPopulated } from "../../../../../backend-nest/src/utils/types";
+import MessageOperations from "../../../graphql/operations/message-operations";
 
 interface ConversationsWrapperProps {
   session: Session;
@@ -45,7 +46,7 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
     query: { conversationId },
   } = router;
   useSubscription<ConversationUpdatedResponse, null>(
-    ConversationOperations.Subscriptions.conversationUpdated,
+    MessageOperations.Subscriptions.conversationUpdated,
     {
       onData: ({ client, data }) => {
         const { data: subscriptionData } = data;

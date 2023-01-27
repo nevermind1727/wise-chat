@@ -89,29 +89,6 @@ export class ConversationsResolver {
     );
   }
 
-  @Subscription('conversationUpdated', {
-    filter: (
-      payload: ConversationUpdatedSubscriptionPayload,
-      _,
-      context: GraphQLContextExtended,
-    ) => {
-      const user = context.extra.session.user;
-      if (!user) {
-        throw new GraphQLError('Not authorized');
-      }
-      console.log('HERE IS THE PAYLOAD', payload);
-      const {
-        conversationUpdated: {
-          conversation: { participants },
-        },
-      } = payload;
-      return isUserConversationParticipant(participants, user.id);
-    },
-  })
-  conversationUpdated() {
-    return this.pubSub.asyncIterator('conversationUpdated');
-  }
-
   @Subscription('conversationDeleted', {
     filter: (
       payload: ConversationDeletedSubscriptionPayload,

@@ -11,6 +11,10 @@ type Mutation {
   sendMessage(conversationId: String, body: String, senderId: String): Boolean
 }
 
+type Subscription {
+  conversationUpdated: ConversationUpdatedSubscriptionPayload
+}
+
 type Query {
   getMessages(conversationId: String): [Message]
 }

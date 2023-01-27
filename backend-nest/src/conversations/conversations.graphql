@@ -38,10 +38,6 @@ type Subscription {
   conversationCreated: Conversation
 }
 
-type Subscription {
-  conversationUpdated: ConversationUpdatedSubscriptionPayload
-}
-
 type Mutation {
   markAsRead(conversationId: String): Boolean
 }

@@ -9,12 +9,12 @@ const getConversationsFields = `
                 id
                 image
             }
-            hasSeenLastMessage
+            hasSeenLatestMessage
         }
-        updatedAt
         lastSentMessage {
             ${getMessagesFields}
         }
+        updatedAt
 `;
 
 export default {

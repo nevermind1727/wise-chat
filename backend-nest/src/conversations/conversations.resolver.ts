@@ -76,6 +76,19 @@ export class ConversationsResolver {
     return this.conversationsService.markAsRead(conversationId, context);
   }
 
+  @Mutation()
+  async deleteConversation(
+    @Args()
+    { conversationId },
+    @Context()
+    context: GraphQLContextExtended,
+  ): Promise<boolean> {
+    return this.conversationsService.deleteConversation(
+      conversationId,
+      context,
+    );
+  }
+
   @Subscription('conversationUpdated', {
     filter: (
       payload: ConversationUpdatedSubscriptionPayload,
@@ -97,19 +110,6 @@ export class ConversationsResolver {
   })
   conversationUpdated() {
     return this.pubSub.asyncIterator('conversationUpdated');
-  }
-
-  @Mutation()
-  async deleteConversation(
-    @Args()
-    { conversationId },
-    @Context()
-    context: GraphQLContextExtended,
-  ): Promise<boolean> {
-    return this.conversationsService.deleteConversation(
-      conversationId,
-      context,
-    );
   }
 
   @Subscription('conversationDeleted', {

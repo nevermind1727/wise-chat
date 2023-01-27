@@ -28,7 +28,10 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, sentByMe }) => {
     >
       {!sentByMe && (
         <Flex align="flex-end">
-          <Avatar size="sm" />
+          <Avatar
+            size="sm"
+            src={message.sender.image === null ? "" : message.sender.image}
+          />
         </Flex>
       )}
       <Stack spacing={1} width="100%">
@@ -42,8 +45,8 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, sentByMe }) => {
               {message.sender.username}
             </Text>
           )}
-          {/* <Text fontSize={14} color="whiteAlpha.700">
-            {formatRelative(Date.parse(message.createdAt), new Date(), {
+          <Text fontSize={14} color="whiteAlpha.700">
+            {formatRelative(new Date(message.createdAt), new Date(), {
               locale: {
                 ...enUS,
                 formatRelative: (token) =>
@@ -52,7 +55,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, sentByMe }) => {
                   ],
               },
             })}
-          </Text> */}
+          </Text>
         </Stack>
         <Flex justify={sentByMe ? "flex-end" : "flex-start"}>
           <Box

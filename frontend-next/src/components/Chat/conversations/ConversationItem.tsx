@@ -63,7 +63,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     conversation.participants,
     userId
   );
-  console.log(participantImage);
+  // console.log(hasSeenLatestMessage);
   return (
     <Stack
       direction="row"

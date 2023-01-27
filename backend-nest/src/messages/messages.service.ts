@@ -71,7 +71,7 @@ export class MessagesService {
             updateMany: {
               where: {
                 NOT: {
-                  id: senderId,
+                  userId: senderId,
                 },
               },
               data: {
@@ -82,6 +82,7 @@ export class MessagesService {
         },
         include: conversationPopulated,
       });
+      console.log('UPDATED CONVERSATION', conversation);
       this.pubSub.publish('messageSent', { messageSent: newMessage });
       this.pubSub.publish('conversationUpdated', {
         conversationUpdated: {

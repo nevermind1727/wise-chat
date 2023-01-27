@@ -27,7 +27,7 @@ export interface Conversation {
 export interface Participant {
     id?: Nullable<string>;
     user?: Nullable<User>;
-    hasSeenLastMessage?: Nullable<boolean>;
+    hasSeenLatestMessage?: Nullable<boolean>;
 }
 
 export interface ConversationUpdatedSubscriptionPayload {

@@ -9,12 +9,15 @@ import {
 import { MessagesService } from './messages.service';
 import { SendMessageDto } from './dto/send-message.dto';
 import {
+  ConversationUpdatedSubscriptionPayload,
   GraphQLContextExtended,
   MessagePopulated,
   MessageSentSubscriptionPayload,
 } from 'src/utils/types';
 import { PubSub } from 'graphql-subscriptions';
 import { Inject } from '@nestjs/common';
+import { GraphQLError } from 'graphql';
+import { isUserConversationParticipant } from 'src/utils/helpers';
 
 @Resolver()
 export class MessagesResolver {

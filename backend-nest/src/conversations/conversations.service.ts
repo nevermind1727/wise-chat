@@ -94,15 +94,14 @@ export class ConversationsService {
             userId: session.user.id,
           },
         });
-      const updatedParticipant =
-        await this.prismaService.conversationParticipant.update({
-          where: {
-            id: participant.id,
-          },
-          data: {
-            hasSeenLatestMessage: true,
-          },
-        });
+      await this.prismaService.conversationParticipant.update({
+        where: {
+          id: participant.id,
+        },
+        data: {
+          hasSeenLatestMessage: true,
+        },
+      });
       return true;
     } catch (e: any) {
       console.log(e);
@@ -147,14 +146,5 @@ export class ConversationsService {
       console.log(e);
       throw new GraphQLError('Error deleting conversation');
     }
-  }
-
-  private async getUserFromSession(context: GraphQLContextExtended) {
-    const { req } = context;
-    const session = await getSession({ req });
-    if (session?.user) {
-      throw new ApolloError('Not Authorized');
-    }
-    return session.user;
   }
 }

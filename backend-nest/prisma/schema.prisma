@@ -71,7 +71,7 @@ model ConversationParticipant {
   userId        String      
   conversation  Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   conversationId String
-  hasSeenLatestMessage Boolean
+  hasSeenLatestMessage Boolean?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }

@@ -43,11 +43,11 @@ export type ConversationCreatedSubscriptionPayload = {
   conversationCreated: ConversationPopulated;
 };
 
-export type ConversationUpdatedSubscriptionPayload = {
+export interface ConversationUpdatedSubscriptionPayload {
   conversationUpdated: {
     conversation: ConversationPopulated;
   };
-};
+}
 
 export type ConversationDeletedSubscriptionPayload = {
   conversationDeleted: ConversationPopulated;

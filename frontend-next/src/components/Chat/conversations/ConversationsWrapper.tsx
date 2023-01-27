@@ -35,6 +35,7 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
       },
     }
   );
+  console.log(conversationsData);
   const router = useRouter();
   const [markAsRead] = useMutation<
     { markAsRead: boolean },
@@ -102,18 +103,20 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
         optimisticResponse: {
           markAsRead: true,
         },
-        update: async (cache) => {
+        update: (cache) => {
           const participantsFragment = cache.readFragment<{
             participants: Array<ParticipantPopulated>;
           }>({
-            id: `Conversation${conversationId}`,
+            id: `Conversation:${conversationId}`,
             fragment: gql`
               fragment Participants on Conversation {
                 participants {
                   user {
                     id
                     username
+                    image
                   }
+                  hasSeenLatestMessage
                 }
               }
             `,
@@ -130,7 +133,7 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
             hasSeenLatestMessage: true,
           };
           cache.writeFragment({
-            id: `Conversation${conversationId}`,
+            id: `Conversation:${conversationId}`,
             fragment: gql`
               fragment UpdatedParticipant on Conversation {
                 participants

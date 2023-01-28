@@ -90,7 +90,23 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
           Find or start new conversation
         </Text>
       </Box>
-      <Box overflowY="scroll" px={4} height="80%">
+      <Box
+        overflowY="scroll"
+        px={4}
+        height="80%"
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "4px",
+          },
+          "&::-webkit-scrollbar-track": {
+            width: "6px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#171923",
+            borderRadius: "24px",
+          },
+        }}
+      >
         {sortedConversations.map((conv) => {
           const convParticipant = conv.participants.find(
             (part) => part.user.id === userId

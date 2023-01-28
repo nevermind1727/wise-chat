@@ -10,8 +10,8 @@ type MessageItemProps = {
 };
 
 const formatRelativeLocale = {
-  lastWeek: "eeee 'at' p",
-  yesterday: "Yesterday at' p",
+  lastWeek: "MM/dd/yy - p",
+  yesterday: "MM/dd/yy - p",
   today: "p",
   other: "MM/dd/yy",
 };

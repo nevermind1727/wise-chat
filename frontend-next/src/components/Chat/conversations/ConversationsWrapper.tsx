@@ -37,7 +37,6 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
       },
     }
   );
-  console.log(conversationsData);
   const router = useRouter();
   const [markAsRead] = useMutation<
     { markAsRead: boolean },
@@ -51,7 +50,6 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
     {
       onData: ({ client, data }) => {
         const { data: subscriptionData } = data;
-        console.log("ON DATA FIRING", subscriptionData);
         if (!subscriptionData) return;
         const {
           conversationUpdated: { conversation: updatedConversation },
@@ -147,8 +145,8 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
           });
         },
       });
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      toast.error(e.message);
     }
   };
 
@@ -159,7 +157,6 @@ const ConversationsWrapper: React.FC<ConversationsWrapperProps> = ({
         prev,
         { subscriptionData }: ConversationCreatedSubscriptionData
       ) => {
-        console.log("SUBSCRIPTION DATA HERE ", subscriptionData);
         if (!subscriptionData.data) return prev;
         const newConversation = subscriptionData.data.conversationCreated;
         return Object.assign({}, prev, {

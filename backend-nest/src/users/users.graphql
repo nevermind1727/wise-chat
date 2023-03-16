@@ -25,3 +25,7 @@ type CreateUsernameResponse {
   success: Boolean
   error: String
 }
+
+type Query {
+  getWiseAi: FoundUser
+}

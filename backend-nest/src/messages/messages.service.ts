@@ -27,9 +27,9 @@ export class MessagesService {
     if (!session?.user) {
       throw new ApolloError('Not Authorized');
     }
-    if (session?.user.id !== senderId) {
-      throw new ApolloError('Not Authorized');
-    }
+    // if (session?.user.id !== senderId) {
+    //   throw new ApolloError('Not Authorized');
+    // }
 
     try {
       const newMessage = await this.prismaService.message.create({
@@ -82,7 +82,6 @@ export class MessagesService {
         },
         include: conversationPopulated,
       });
-      console.log('UPDATED CONVERSATION', conversation);
       this.pubSub.publish('messageSent', { messageSent: newMessage });
       this.pubSub.publish('conversationUpdated', {
         conversationUpdated: {
@@ -91,7 +90,6 @@ export class MessagesService {
       });
       return true;
     } catch (e) {
-      console.error(e);
       throw new GraphQLError('Error sending message');
     }
   }
@@ -131,7 +129,6 @@ export class MessagesService {
       });
       return messages;
     } catch (error) {
-      console.error(error);
       throw new GraphQLError('Error getting messages');
     }
   }

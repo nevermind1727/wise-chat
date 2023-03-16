@@ -56,15 +56,6 @@ export class ConversationsService {
     }
     try {
       const conversations = await this.prismaService.conversation.findMany({
-        // where: {
-        //     participants: {
-        //         some: {
-        //             userId: {
-        //                 equals: user.id
-        //             }
-        //         }
-        //     }
-        // },
         include: conversationPopulated,
       });
       const filteredConversations = conversations.filter(
@@ -104,7 +95,6 @@ export class ConversationsService {
       });
       return true;
     } catch (e: any) {
-      console.log(e);
       throw new GraphQLError(e?.message);
     }
   }
@@ -137,14 +127,32 @@ export class ConversationsService {
           },
         }),
       ]);
-      console.log('Deleted Conversation ', deletedConversation);
       this.pubSub.publish('conversationDeleted', {
         conversationDeleted: deletedConversation,
       });
       return true;
     } catch (e) {
-      console.log(e);
       throw new GraphQLError('Error deleting conversation');
     }
+  }
+
+  async getWiseAiConversation(context: GraphQLContextExtended) {
+    const { req } = context;
+    const session = await getSession({ req });
+    if (!session?.user) {
+      throw new ApolloError('Not Authorized');
+    }
+    const conversations = await this.prismaService.conversation.findMany({
+      include: conversationPopulated,
+    });
+    const filteredConversations = conversations.filter(
+      (conv) =>
+        !!conv.participants.find((part) => part.userId === session.user.id),
+    );
+    const wiseAiConversation = filteredConversations.find(
+      (conv) =>
+        !!conv.participants.find((part) => part.user.username === 'WiseAI'),
+    );
+    return wiseAiConversation;
   }
 }

@@ -1,4 +1,4 @@
-import { Flex, Stack, Text } from "@chakra-ui/react";
+import { Flex, Stack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import MessagesOperations from "../../../../graphql/operations/message-operations";
 import {
@@ -30,7 +30,6 @@ const MessagesList: React.FC<MessagesListProps> = ({
     {
       variables: { conversationId },
       onError: ({ message }) => {
-        console.log(message);
         toast.error(message);
       },
     }
@@ -46,7 +45,6 @@ const MessagesList: React.FC<MessagesListProps> = ({
         prev,
         { subscriptionData }: MessageSentSubscriptionData
       ) => {
-        console.log("SUBSCRIPTION DATA HERE ", subscriptionData);
         if (!subscriptionData.data) return prev;
         const newMessage = subscriptionData.data.messageSent;
         return Object.assign({}, prev, {
@@ -73,7 +71,23 @@ const MessagesList: React.FC<MessagesListProps> = ({
         </Stack>
       )}
       {messagesData?.getMessages && (
-        <Flex direction="column-reverse" overflowY="scroll" height="100%">
+        <Flex
+          direction="column-reverse"
+          overflowY="scroll"
+          height="100%"
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "4px",
+            },
+            "&::-webkit-scrollbar-track": {
+              width: "6px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#171923",
+              borderRadius: "24px",
+            },
+          }}
+        >
           {messagesData.getMessages.map((message) => (
             <MessageItem
               message={message}

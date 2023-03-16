@@ -11,10 +11,11 @@ import { SubscriptionContext } from './utils/types';
 import { ApolloError } from 'apollo-server-express';
 import { Session } from 'next-auth';
 import { PubSub } from 'graphql-subscriptions';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       cors: {
         origin: 'http://localhost:3000',
@@ -46,6 +47,7 @@ import { PubSub } from 'graphql-subscriptions';
     UsersModule,
     ConversationsModule,
     MessagesModule,
+    OpenaiModule,
   ],
   providers: [
     {

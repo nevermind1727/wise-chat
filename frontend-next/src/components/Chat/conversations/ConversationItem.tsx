@@ -32,9 +32,6 @@ interface ConversationItemProps {
   isSelected: boolean;
   hasSeenLatestMessage: boolean | undefined;
   onDeleteConversation: (conversationId: string) => void;
-  // onEditConversation?: () => void;
-  // selectedConversationId?: string;
-  // onLeaveConversation?: (conversation: ConversationPopulated) => void;
 }
 
 const ConversationItem: React.FC<ConversationItemProps> = ({
@@ -44,9 +41,6 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   isSelected,
   hasSeenLatestMessage,
   onDeleteConversation,
-  // selectedConversationId,
-  // onEditConversation,
-  // onLeaveConversation,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -63,7 +57,6 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     conversation.participants,
     userId
   );
-  // console.log(hasSeenLatestMessage);
   return (
     <Stack
       direction="row"
@@ -82,17 +75,6 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     >
       <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)}>
         <MenuList bg="#171923">
-          <MenuItem
-            icon={<AiOutlineEdit fontSize={20} />}
-            onClick={(event) => {
-              event.stopPropagation();
-              //   onEditConversation();
-            }}
-            _hover={{ bg: "whiteAlpha.300" }}
-            bg="#171923"
-          >
-            Edit
-          </MenuItem>
           {conversation.participants.length > 2 ? (
             <MenuItem
               icon={<BiLogOut fontSize={20} />}

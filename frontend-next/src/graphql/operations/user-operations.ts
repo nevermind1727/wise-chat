@@ -11,6 +11,15 @@ export default {
         }
       }
     `,
+    getWiseAi: gql`
+      query GetWiseAi {
+        getWiseAi {
+          id
+          username
+          image
+        }
+      }
+    `,
   },
   Mutations: {
     createUsername: gql`

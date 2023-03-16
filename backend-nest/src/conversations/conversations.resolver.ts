@@ -21,6 +21,7 @@ import { Inject } from '@nestjs/common';
 import { CreateConversationDto } from './dto/create-conversation.dto';
 import { isUserConversationParticipant } from 'src/utils/helpers';
 import { GraphQLError } from 'graphql';
+import { Conversation } from 'src/graphql';
 
 @Resolver()
 export class ConversationsResolver {
@@ -89,6 +90,13 @@ export class ConversationsResolver {
     );
   }
 
+  @Query()
+  async getWiseAiConversation(
+    @Context() context: GraphQLContextExtended,
+  ) {
+    return this.conversationsService.getWiseAiConversation(context);
+  }
+
   @Subscription('conversationDeleted', {
     filter: (
       payload: ConversationDeletedSubscriptionPayload,
@@ -99,7 +107,6 @@ export class ConversationsResolver {
       if (!user) {
         throw new GraphQLError('Not authorized');
       }
-      console.log('HERE IS THE PAYLOAD', payload);
       const {
         conversationDeleted: { participants },
       } = payload;

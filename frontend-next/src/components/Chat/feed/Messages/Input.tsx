@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Box, Input } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import React, { useState } from "react";
@@ -6,9 +6,13 @@ import toast from "react-hot-toast";
 import MessagesOperations from "../../../../graphql/operations/message-operations";
 import {
   GetMessagesResponse,
+  GetWiseAiResponse,
   SendMessageParams,
 } from "../../../../utils/types";
 import cuid from "cuid";
+import conversationOperations from "../../../../graphql/operations/conversation-operations";
+import openaiOperations from "../../../../graphql/operations/openai-operations";
+import userOperations from "../../../../graphql/operations/user-operations";
 
 type MessageInputProps = {
   session: Session;
@@ -24,6 +28,17 @@ const MessageInput: React.FC<MessageInputProps> = ({
     { sendMessage: boolean },
     SendMessageParams
   >(MessagesOperations.Mutations.sendMessage);
+  const [getWiseAiConversation] = useLazyQuery<
+    { getWiseAiConversation: { id: string } },
+    null
+  >(conversationOperations.Queries.getWiseAiConversation);
+  const [getWiseAi] = useLazyQuery<GetWiseAiResponse, null>(
+    userOperations.Queries.getWiseAi
+  );
+  const [generateAiResponse] = useMutation<
+    { generateAiResponse: string },
+    { prompt: string; conversationId: string; senderId: string }
+  >(openaiOperations.Mutations.generateAiResponse);
   const onSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -75,10 +90,27 @@ const MessageInput: React.FC<MessageInputProps> = ({
       if (!data?.sendMessage || errors) {
         throw new Error("Error sending message");
       }
-      console.log("HERE IS THE MESSAGE DATA ", data.sendMessage);
+      const { data: getWiseAiConversationData } = await getWiseAiConversation();
+      if (
+        getWiseAiConversationData?.getWiseAiConversation.id === conversationId
+      ) {
+        const { data: getWiseAiData } = await getWiseAi();
+        if (!getWiseAiData) {
+          throw new Error("Error getting wise AI");
+        }
+        const {
+          data: generateAiResponseData,
+          errors: generateAiResponseError,
+        } = await generateAiResponse({
+          variables: {
+            prompt: messageBody,
+            conversationId,
+            senderId: getWiseAiData?.getWiseAi.id,
+          },
+        });
+      }
       setMessageBody("");
     } catch (e: any) {
-      console.error(e);
       toast.error(e?.message);
     }
   };

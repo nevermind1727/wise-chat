@@ -85,3 +85,7 @@ export interface ConversationDeletedResponse {
     id: string;
   };
 }
+
+export interface GetWiseAiResponse {
+  getWiseAi: FoundUser;
+}

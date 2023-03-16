@@ -47,7 +47,6 @@ export class MessagesResolver {
       payload: MessageSentSubscriptionPayload,
       variables: { conversationId: string },
     ) => {
-      console.log('MESSAGE PAYLOAD', payload);
       return payload.messageSent.conversationId === variables.conversationId;
     },
   })
@@ -65,7 +64,6 @@ export class MessagesResolver {
       if (!user) {
         throw new GraphQLError('Not authorized');
       }
-      console.log('HERE IS THE PAYLOAD', payload);
       const {
         conversationUpdated: {
           conversation: { participants },

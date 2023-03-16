@@ -65,7 +65,6 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
         }
       );
     } catch (e: any) {
-      console.error(e);
       toast.error(e?.message);
     }
   };
@@ -111,7 +110,6 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
           const convParticipant = conv.participants.find(
             (part) => part.user.id === userId
           );
-          console.log(convParticipant);
           return (
             <ConversationItem
               userId={userId}

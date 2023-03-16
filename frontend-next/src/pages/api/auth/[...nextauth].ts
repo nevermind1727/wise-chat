@@ -1,8 +1,7 @@
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import prisma from "../../../lib/prismadb"
-import FacebookProvider from "next-auth/providers/facebook"
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "../../../lib/prismadb";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -14,15 +13,11 @@ export default NextAuth({
         timeout: 40000,
       },
     }),
-    FacebookProvider({
-        clientId: process.env.FACEBOOK_CLIENT_ID as string,
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string
-    })
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({session, token, user}) {
-      return {...session, user: {...session.user, ...user}};
-    }
-  }
-})
+    async session({ session, token, user }) {
+      return { ...session, user: { ...session.user, ...user } };
+    },
+  },
+});

@@ -17,7 +17,6 @@ export const getParticipantImage = (
   const participant = participants.find(
     (part) => part.user.id !== currentUserId
   );
-  console.log(participant);
   const participantImage = participant?.user.image;
   if (participantImage === null) return "";
   return participantImage;

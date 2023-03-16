@@ -1,0 +1,8 @@
+type Mutation {
+  generateAiResponse(
+    prompt: String
+    conversationId: String
+    body: String
+    senderId: String
+  ): String
+}

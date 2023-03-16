@@ -26,6 +26,13 @@ export default {
                 }
             }
         `,
+    getWiseAiConversation: gql`
+      query GetWiseAiConversation {
+        getWiseAiConversation {
+          id
+        }
+      }
+    `,
   },
   Mutations: {
     createConversation: gql`

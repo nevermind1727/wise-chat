@@ -1,5 +1,5 @@
-import { Button, Flex, Stack, Text } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import { Flex, Stack, Text } from "@chakra-ui/react";
+import React from "react";
 import { BiMessageSquareDots } from "react-icons/bi";
 import { GetConversationsResponse } from "../../../utils/types";
 import ConversationOperations from "../../../graphql/operations/conversation-operations";

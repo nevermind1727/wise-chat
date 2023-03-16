@@ -13,6 +13,7 @@ export interface IMutation {
     markAsRead(conversationId?: Nullable<string>): Nullable<boolean> | Promise<Nullable<boolean>>;
     deleteConversation(conversationId?: Nullable<string>): Nullable<boolean> | Promise<Nullable<boolean>>;
     sendMessage(conversationId?: Nullable<string>, body?: Nullable<string>, senderId?: Nullable<string>): Nullable<boolean> | Promise<Nullable<boolean>>;
+    generateAiResponse(prompt?: Nullable<string>, conversationId?: Nullable<string>, body?: Nullable<string>, senderId?: Nullable<string>): Nullable<string> | Promise<Nullable<string>>;
     createUsername(username?: Nullable<string>): Nullable<CreateUsernameResponse> | Promise<Nullable<CreateUsernameResponse>>;
 }
 
@@ -40,8 +41,10 @@ export interface ConversationDeletedSubscriptionPayload {
 
 export interface IQuery {
     getConversations(): Nullable<Nullable<Conversation>[]> | Promise<Nullable<Nullable<Conversation>[]>>;
+    getWiseAiConversation(): Nullable<Conversation> | Promise<Nullable<Conversation>>;
     getMessages(conversationId?: Nullable<string>): Nullable<Nullable<Message>[]> | Promise<Nullable<Nullable<Message>[]>>;
     findUsers(username?: Nullable<string>): Nullable<Nullable<FoundUser>[]> | Promise<Nullable<Nullable<FoundUser>[]>>;
+    getWiseAi(): Nullable<FoundUser> | Promise<Nullable<FoundUser>>;
 }
 
 export interface CreateConversationResponse {

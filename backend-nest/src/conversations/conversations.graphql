@@ -49,3 +49,7 @@ type Mutation {
 type Subscription {
   conversationDeleted: ConversationDeletedSubscriptionPayload
 }
+
+type Query {
+  getWiseAiConversation: Conversation
+}
